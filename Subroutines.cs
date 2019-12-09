@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace AlgLab7
+namespace AlgLab8
 {
     class Subroutines
     {
@@ -18,7 +18,7 @@ namespace AlgLab7
                 Console.Clear();
                 Console.WriteLine("* c - создать дерево и заполнить его случайными величинами");
                 Console.WriteLine("* b - добавить элементы в дерево вручную");
-                Console.WriteLine("* d - удалить узел с заданным следом");
+                Console.WriteLine("* d - удалить узелы, принадлежащие заданному отрезку");
                 Console.WriteLine("* p - показать дерево (сделать обход, без связей)");
                 Console.WriteLine("* r - показать таблицу связей дерева");
                 Console.WriteLine("* h - Получить высоту дерева");

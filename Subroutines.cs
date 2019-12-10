@@ -16,14 +16,14 @@ namespace AlgLab8
             do
             {
                 Console.Clear();
-                Console.WriteLine("* c - создать дерево и заполнить его случайными величинами");
-                Console.WriteLine("* b - добавить элементы в дерево вручную");
-                Console.WriteLine("* d - удалить узелы, принадлежащие заданному отрезку");
+                Console.WriteLine("* c - создать деревья и заполнить их случайными величинами (по х)");
+                Console.WriteLine("* b - восстановить деревья из файла input.dat");
+                Console.WriteLine("* d - удалить узлы, принадлежащие заданному отрезку");
                 Console.WriteLine("* p - показать дерево (сделать обход, без связей)");
                 Console.WriteLine("* r - показать таблицу связей дерева");
                 Console.WriteLine("* h - Получить высоту дерева");
                 Console.WriteLine("* v - получить информацию о корне");
-                Console.WriteLine("* n - установить правильные следы в дереве");
+                Console.WriteLine("* n - установить отрезок");
                 Console.WriteLine("* ESC - выход");
                 Console.Write("Ваш выбор - ");
                 symbol = Convert.ToChar(Console.ReadKey(true).KeyChar);
@@ -229,5 +229,7 @@ namespace AlgLab8
                     return false;
             return true;
         }
+
+        
     }
 }

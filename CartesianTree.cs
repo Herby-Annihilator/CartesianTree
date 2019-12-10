@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace AlgLab8
 {    
@@ -28,7 +29,9 @@ namespace AlgLab8
         /// Приоритет
         /// </summary>
         public int Y { get; set; }
-
+        /// <summary>
+        /// Любые ваши данные
+        /// </summary>
         public T Data { get; set; }
 
         public CartesianTree()
@@ -158,5 +161,59 @@ namespace AlgLab8
             right.Split(x, out middle, out right);
             return Merge(left, right);
         }
+        public int FindMaxX()
+        {
+            if (RightSubTree == null)
+                return this.X;
+            CartesianTree<T> current = this.RightSubTree;
+            while (current.RightSubTree != null)
+                current = current.RightSubTree;
+            return current.X;
+        }
+        /// <summary>
+        /// Восстанавливает деревья из файла
+        /// </summary>
+        /// <param name="tree1"></param>
+        /// <param name="tree2"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static int RestoreFromFile(CartesianTree<T> tree1, CartesianTree<T> tree2, string fileName)
+        {
+            StreamReader reader = new StreamReader(fileName);
+            string first;
+            int numberOfTrees = 0;          // 0 - если не получилось деревьев, 1 - если получилось одно деревео, 2 - если получилось 2 дерева
+            while ((first = reader.ReadLine()) != null)
+            {
+                if (first[0] == '$' && first[first.Length - 1] == '$')
+                {
+                    string[] pairs = first.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);  // разбил на пары х,у
+                    for (int i = 1; i < pairs.Length - 1; i++)  // нужно исключить элементы [0] и [lenght - 1], т.к. в них заведомо некорректные данные
+                    {
+                        string[] XY = pairs[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        int x, y;
+                        if (!Int32.TryParse(XY[0], out x))
+                            throw new InvalidDataException("Неверный формат строки дерева");
+                        if (!Int32.TryParse(XY[1], out y))
+                            throw new InvalidDataException("Неверный формат строки дерева");
+                        if (tree1 == null)
+                            tree1 = new CartesianTree<T>(x, y, default(T));
+                        tree1.Add(x, y);
+                    }
+                    numberOfTrees++;
+                }
+            }
+            reader.Close();
+            return numberOfTrees;
+        }
+        public void Clone(out CartesianTree<T> tree)
+        {
+            if (this == null)
+            {
+                tree = null;
+                return;
+            }
+
+        }
+
     }
 }

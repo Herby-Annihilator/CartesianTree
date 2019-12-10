@@ -17,6 +17,7 @@ namespace AlgLab8
             cartesianTree = cartesianTree.Add(2 , 1);
             cartesianTree = cartesianTree.Add(10 , 10);
             cartesianTree = cartesianTree.Add(1 , 4);
+            cartesianTree = cartesianTree.Delete(1);
         }
     }
 }

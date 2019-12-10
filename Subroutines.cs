@@ -23,92 +23,102 @@ namespace AlgLab8
                 Console.WriteLine("* r - показать таблицу связей дерева");
                 Console.WriteLine("* h - Получить высоту дерева");
                 Console.WriteLine("* v - получить информацию о корне");
-                Console.WriteLine("* n - установить отрезок");
                 Console.WriteLine("* ESC - выход");
                 Console.Write("Ваш выбор - ");
                 symbol = Convert.ToChar(Console.ReadKey(true).KeyChar);
-            } while (symbol != 'c' && symbol != 'b' && symbol != 'p' && symbol != 'r' && symbol != 'h' && symbol != 'v' && symbol != 27 && symbol != 'd' && symbol != 'n');
+            } while (symbol != 'c' && symbol != 'b' && symbol != 'p' && symbol != 'r' && symbol != 'h' && symbol != 'v' && symbol != 27 && symbol != 'd');
             return symbol;
         }
         //
         // Сохранить в input.dat (нерекурсивный алгоритм обхода дерева по принципу лево-корень-право)
         //
         /// <summary>
-        /// Сохранит дерево в одну строку в указанный файл
+        /// Сохранит дерево в одну строку в указанный файл (добавление)
         /// </summary>
         /// <param name="tree"></param>
         /// <param name="fileName"></param>
-        //public static void SaveTreeInFile(AVLTree<int> tree, string fileName)
-        //{
-        //    StreamWriter writer = new StreamWriter(fileName);
-        //    tree.PutRightBalance(tree.Root);
-        //    Stack<AVLTree<int>.Node<int>> stack = new Stack<AVLTree<int>.Node<int>>();
-        //    AVLTree<int>.Node<int> currentNode = tree.Root;
-        //    if (currentNode.IsLeaf())
-        //        writer.Write(currentNode.Key + " ");
-        //    while (!(currentNode == null && stack.Count == 0))
-        //    {
-        //        if (currentNode != null)
-        //        {
-        //            stack.Push(currentNode);
-        //            currentNode = currentNode.LeftChild;
-        //        }
-        //        else
-        //        {
-        //            currentNode = stack.Pop();
-        //            writer.Write(currentNode.Key + " // ");
-        //            currentNode = currentNode.RightChild;
-        //        }
-        //    }
-        //    writer.Close();
-        //}
-        //public static void AddLinksTableToFile(AVLTree<int> tree, string fileName)
-        //{
-        //    if (tree.Root == null)
-        //        return;
-        //    StreamWriter writer = new StreamWriter(fileName, true);
-        //    if (writer == null)
-        //        throw new FileNotFoundException("Файл " + fileName + " не найден");
-        //    Stack<AVLTree<int>.Node<int>> stack = new Stack<AVLTree<int>.Node<int>>();
-        //    AVLTree<int>.Node<int> currentNode = tree.Root;
-        //    writer.WriteLine("\n");
-        //    writer.WriteLine("==========Корень данного дерева==========\n");
-        //    writer.WriteLine("Значение ключа = " + tree.Root.Key + " Данные = " + tree.Root.Data);
-        //    if (tree.Root.LeftChild.IsExist())
-        //        writer.WriteLine("Потомок слева существует: ключ = " + tree.Root.LeftChild.Key + " Данные = " + tree.Root.LeftChild.Data);
-        //    else
-        //        writer.WriteLine("Потомков слева нет");
-        //    if (tree.Root.RightChild.IsExist())
-        //        writer.WriteLine("Потомок справа существует: ключ = " + tree.Root.RightChild.Key + " Данные = " + tree.Root.RightChild.Data);
-        //    else
-        //        writer.WriteLine("Потомков справа нет");
-        //    writer.WriteLine("\n");
-        //    writer.WriteLine("================Таблица ссылок в данном экземпляре авл-дерева==================\n");
-        //    writer.WriteLine("| Значение в узле + след|  Левый потомок|  Правый потомок|\n");
-        //    while (!(currentNode == null && stack.Count == 0))
-        //    {
-        //        if (currentNode != null)
-        //        {
-        //            stack.Push(currentNode);
-        //            currentNode = currentNode.LeftChild;
-        //        }
-        //        else
-        //        {
-        //            currentNode = stack.Pop();
-        //            writer.Write("  " + currentNode.Key + " \t" + "\"" + currentNode.Trace + "\"" + " \t\t");
-        //            if (currentNode.LeftChild != null)
-        //                writer.Write("  " + currentNode.LeftChild.Key + " \t" + "\"" + currentNode.LeftChild.Trace + "\"" + " \t\t");
-        //            else
-        //                writer.Write("\t нет\t\t");
-        //            if (currentNode.RightChild != null)
-        //                writer.Write("  " + currentNode.RightChild.Key + " \t" + "\"" + currentNode.RightChild.Trace + "\"" + " \n\n" + writer.NewLine);
-        //            else
-        //                writer.Write("\t нет\n\n" + writer.NewLine);
-        //            currentNode = currentNode.RightChild;
-        //        }
-        //    }
-        //    writer.Close();
-        //}
+        public static void SaveTreeInFile(CartesianTree<int> tree, string fileName)
+        {
+            StreamWriter writer = new StreamWriter(fileName, true);
+            Stack<Node<int>> stack = new Stack<Node<int>>();
+            Node<int> currentNode = tree.Root;
+            writer.Write("\n$;");
+            while (!(currentNode == null && stack.Count == 0))
+            {
+                if (currentNode != null)
+                {
+                    stack.Push(currentNode);
+                    currentNode = currentNode.LeftSubTree;
+                }
+                else
+                {
+                    currentNode = stack.Pop();
+                    writer.Write(currentNode.X + " " + currentNode.Y + ";");
+                    currentNode = currentNode.RightSubTree;
+                }
+            }
+            writer.Write("$\n");
+            writer.Close();
+        }
+        public static void AddLinksTableToFile(CartesianTree<int> tree, string fileName)
+        {
+            if (tree.Root == null)
+                return;
+            StreamWriter writer = new StreamWriter(fileName, true);
+            if (writer == null)
+                throw new FileNotFoundException("Файл " + fileName + " не найден");
+            Stack<Node<int>> stack = new Stack<Node<int>>();
+            Node<int> currentNode = tree.Root;
+            writer.WriteLine("\n");
+            writer.WriteLine("==========Корень данного дерева==========\n");
+            if (tree.Root == null)
+            {
+                Console.WriteLine("NULL");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Поле data = " + tree.Root.Data);
+                Console.WriteLine("Ключ Х = " + tree.Root.X);
+                Console.WriteLine("Приоритет = " + tree.Root.Y);
+                Console.Write("Потомок слева = ");
+                if (tree.Root.LeftSubTree != null)
+                    Console.WriteLine("ключ Х = " + tree.Root.LeftSubTree.X + "приоритет Y = " + tree.Root.LeftSubTree.Y);
+                else
+                    Console.WriteLine("не существует");
+                Console.Write("Потомок справа = ");
+                if (tree.Root.RightSubTree != null)
+                    Console.WriteLine("ключ Х = " + tree.Root.RightSubTree.X + "приоритет Y = " + tree.Root.RightSubTree.Y + "\n\n");
+                else
+                    Console.WriteLine("не существует\n\n");
+            }
+            writer.WriteLine("\n");
+            writer.WriteLine("================Таблица ссылок в данном экземпляре Декартова дерева==================\n");
+            writer.WriteLine("| Ключ + (приоритет)|  Левый потомок|  Правый потомок|\n");
+            while (!(currentNode == null && stack.Count == 0))
+            {
+                if (currentNode != null)
+                {
+                    stack.Push(currentNode);
+                    currentNode = currentNode.LeftSubTree;
+                }
+                else
+                {
+                    currentNode = stack.Pop();
+                    writer.Write("  " + currentNode.X + " \t" + "(" + currentNode.Y + ")" + " \t\t");
+                    if (currentNode.LeftSubTree != null)
+                        writer.Write("  " + currentNode.LeftSubTree.X + " \t" + "(" + currentNode.LeftSubTree.Y + ")" + " \t\t");
+                    else
+                        writer.Write("\t нет\t\t");
+                    if (currentNode.RightSubTree != null)
+                        writer.Write("  " + currentNode.RightSubTree.X + " \t" + "(" + currentNode.RightSubTree.Y + ")" + " \n\n" + writer.NewLine);
+                    else
+                        writer.Write("\t нет\n\n" + writer.NewLine);
+                    currentNode = currentNode.RightSubTree;
+                }
+            }
+            writer.Close();
+        }
         //
         // Переписать из файла в файл
         //

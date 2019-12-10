@@ -177,13 +177,17 @@ namespace AlgLab8
         /// <param name="tree2"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static int RestoreFromFile(Node<T> tree1, Node<T> tree2, string fileName)
+        public static int RestoreFromFile(out Node<T> tree1, out Node<T> tree2, string fileName)
         {
             StreamReader reader = new StreamReader(fileName);
+            tree1 = null;
+            tree2 = null;
             string first;
             int numberOfTrees = 0;          // 0 - если не получилось деревьев, 1 - если получилось одно деревео, 2 - если получилось 2 дерева
             while ((first = reader.ReadLine()) != null)
             {
+                if (String.IsNullOrEmpty(first))
+                    continue;
                 if (first[0] == '$' && first[first.Length - 1] == '$')
                 {
                     string[] pairs = first.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);  // разбил на пары х,у
@@ -199,7 +203,7 @@ namespace AlgLab8
                                 throw new InvalidDataException("Неверный формат строки дерева");
                             if (tree1 == null)
                                 tree1 = new Node<T>(x, y, default(T));
-                            tree1.Add(x, y);
+                            tree1 = tree1.Add(x, y);
                         }
                         numberOfTrees++;
                     }
@@ -215,7 +219,7 @@ namespace AlgLab8
                                 throw new InvalidDataException("Неверный формат строки дерева");
                             if (tree2 == null)
                                 tree2 = new Node<T>(x, y, default(T));
-                            tree2.Add(x, y);
+                            tree2 = tree2.Add(x, y);
                         }
                         numberOfTrees++;
                         break;

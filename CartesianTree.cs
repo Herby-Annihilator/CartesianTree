@@ -57,7 +57,13 @@ namespace AlgLab8
             tree2 = new CartesianTree<T>();
             try
             {
-                return Node<T>.RestoreFromFile(tree1.Root, tree2.Root, fileName);
+                Node<T> root1;
+                Node<T> root2;
+                int a = Node<T>.RestoreFromFile(out root1, out root2, fileName);
+
+                tree1.Root = root1;
+                tree2.Root = root2;
+                return a;
             }
             catch(InvalidDataException e)
             {
@@ -94,6 +100,109 @@ namespace AlgLab8
             if (Root == null)
                 return true;
             return false;
+        }
+
+        public void DeleteFromSegment(int x1, int x2)
+        {
+            if (this.Root.X >= x1 && this.Root.X <= x2)
+                Root = Root.Delete(Root.X);
+        }
+
+        public int FindMax()
+        {
+            return this.Root.FindMaxX();
+        }
+        /// <summary>
+        /// Сделает обход по принципу лево-право-корень
+        /// </summary>
+        public void ShowTree()
+        {
+            Stack<Node<T>> stack = new Stack<Node<T>>();
+            Node<T> lastVisitedNode = null;
+            Node<T> peekNode = null;
+            Node<T> currentNode = Root;
+
+            while (stack.Count != 0 || currentNode != null)
+            {
+                if (currentNode != null)
+                {
+                    stack.Push(currentNode);
+                    currentNode = currentNode.LeftSubTree;
+                }
+                else
+                {
+                    peekNode = stack.Peek();
+                    // если правый потомок существует и обход пришёл из левого потомка, двигаемся вправо
+                    if (peekNode.RightSubTree != null && lastVisitedNode != peekNode.RightSubTree)
+                        currentNode = peekNode.RightSubTree;
+                    else
+                    {
+                        // Visit
+                        Console.Write("X = " + currentNode.X + " Y = " + currentNode.Y + " ");
+                        lastVisitedNode = stack.Pop();
+                    }
+                }
+            }
+        }
+
+        public void GetRootInfo()
+        {
+            if (Root == null)
+            {
+                Console.WriteLine("NULL");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Поле data = " + Root.Data);
+                Console.WriteLine("Ключ Х = " + Root.X);
+                Console.WriteLine("Приоритет = " + Root.Y);
+                Console.Write("Потомок слева = ");
+                if (Root.LeftSubTree != null)
+                    Console.WriteLine("ключ Х = " + Root.LeftSubTree.X + "приоритет Y = " + Root.LeftSubTree.Y);
+                else
+                    Console.WriteLine("не существует");
+                Console.Write("Потомок справа = ");
+                if (Root.RightSubTree != null)
+                    Console.WriteLine("ключ Х = " + Root.RightSubTree.X + "приоритет Y = " + Root.RightSubTree.Y + "\n\n");
+                else
+                    Console.WriteLine("не существует\n\n");
+            }
+        }
+        public bool ShowTreeLinks()
+        {
+            if (this.Root == null)
+                return false;
+            Stack<Node<T>> stack = new Stack<Node<T>>();
+            Node<T> currentNode = Root;
+            Console.WriteLine("\n");
+            GetRootInfo();
+            Console.WriteLine("\n");
+            Console.WriteLine("================Таблица ссылок в данном экземпляре Декартова дерева==================\n");
+            Console.WriteLine("| Ключ + (приоритет)|  Левый потомок|  Правый потомок|\n");
+            while (!(currentNode == null && stack.Count == 0))
+            {
+                if (currentNode != null)
+                {
+                    stack.Push(currentNode);
+                    currentNode = currentNode.LeftSubTree;
+                }
+                else
+                {
+                    currentNode = stack.Pop();
+                    Console.Write("  " + currentNode.X + " \t" + "(" + currentNode.Y + ")" + " \t\t");
+                    if (currentNode.LeftSubTree != null)
+                        Console.Write("  " + currentNode.LeftSubTree.X + " \t" + "(" + currentNode.LeftSubTree.Y + ")" + " \t\t");
+                    else
+                        Console.Write("\t нет\t\t");
+                    if (currentNode.RightSubTree != null)
+                        Console.Write("  " + currentNode.RightSubTree.X + " \t" + "(" + currentNode.RightSubTree.Y + ")" + " \n\n");
+                    else
+                        Console.Write("\t нет\n\n");
+                    currentNode = currentNode.RightSubTree;
+                }
+            }
+            return true;
         }
     }
 }

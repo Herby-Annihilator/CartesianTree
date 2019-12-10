@@ -6,214 +6,94 @@ using System.Threading.Tasks;
 using System.IO;
 
 namespace AlgLab8
-{    
-    /// <summary>
-    /// Декартово дерево
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
+{
     class CartesianTree<T>
     {
-        /// <summary>
-        /// Правое поддерево
-        /// </summary>
-        public CartesianTree<T> RightSubTree { get; set; }
-        /// <summary>
-        /// Левое поддерево
-        /// </summary>
-        public CartesianTree<T> LeftSubTree { get; set; }
-        /// <summary>
-        /// Ключ
-        /// </summary>
-        public int X { get; set; }
-        /// <summary>
-        /// Приоритет
-        /// </summary>
-        public int Y { get; set; }
-        /// <summary>
-        /// Любые ваши данные
-        /// </summary>
-        public T Data { get; set; }
+        public Node<T> Root { get; private set; }
+        private int height;
+        public int Height
+        {
+            get
+            {
+                return GetHeight(Root);
+            }
+            private set
+            {
+                height = value;
+            }
+        }
 
         public CartesianTree()
         {
-            Data = default(T);
-            X = 0;
-            Y = 0;
-            RightSubTree = null;
-            LeftSubTree = null;
+            Root = null;
+        }
+        public CartesianTree(Node<T> root)
+        {
+            Root = root;
         }
 
-        public CartesianTree(int x, int y, T data) : this()
+        public void Add(int x, int y, T data = default(T))
         {
-            Data = data;
-            X = x;
-            Y = y;
-        }
-        public CartesianTree(CartesianTree<T> left, CartesianTree<T> right, int x, int y, T data)
-        {
-            LeftSubTree = left;
-            RightSubTree = right;
-            X = x;
-            Y = y;
-            Data = data;
-        }
-        /// <summary>
-        /// Добавляет элемент в декартово дерево
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public CartesianTree<T> Add(int x, int y, T data)
-        {
-            CartesianTree<T> left = new CartesianTree<T>();
-            CartesianTree<T> right = new CartesianTree<T>();
-            CartesianTree<T> middle = new CartesianTree<T>(x, y, data);
-            Split(x, out left, out right);
-            return Merge(Merge(left, middle), right);
-        }
-        /// <summary>
-        /// Добавляет элемент в декартово дерево
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public CartesianTree<T> Add(int x, int y)
-        {
-            T data = default(T);
-            CartesianTree<T> left = new CartesianTree<T>();
-            CartesianTree<T> right = new CartesianTree<T>();
-            CartesianTree<T> middle = new CartesianTree<T>(x, y, data);
-            Split(x, out left, out right);
-            return Merge(Merge(left, middle), right);
-        }
-        /// <summary>
-        /// Сливает два заданных дерева в одно
-        /// Ключи в левом дереве должны быть меньше, чем ключи в правом дереве
-        /// </summary>
-        /// <param name="leftTree">первое дерево</param>
-        /// <param name="rightTree">второе дерево</param>
-        /// <returns></returns>
-        public static CartesianTree<T> Merge(CartesianTree<T> leftTree, CartesianTree<T> rightTree)
-        {
-            if (leftTree == null)
-                return rightTree;
-            if (rightTree == null)
-                return leftTree;
-            if (leftTree.Y > rightTree.Y)
+            if (Root == null)
             {
-                rightTree.LeftSubTree = Merge(rightTree.LeftSubTree, leftTree);
-                return rightTree;
-            }
-            else
-            {
-                leftTree.RightSubTree = Merge(leftTree.RightSubTree, rightTree);
-                return leftTree;
-            }
-        }
-        /// <summary>
-        /// Разделит текущее дерево на два новых по заданному ключу
-        /// </summary>
-        /// <param name="key">Ключ</param>
-        /// <param name="newLeft">Новое левое дерево (в нем ключи меньше заданного)</param>
-        /// <param name="newRight">Новое правое дерево (в нем ключи больше заданного)</param>
-        public void Split(int key, out CartesianTree<T> newLeft, out CartesianTree<T> newRight)
-        {
-            CartesianTree<T> tree = null;
-            if (this.X <= key)
-            {
-                if (this.RightSubTree == null)
-                    newRight = null;
-                else
-                    this.RightSubTree.Split(key, out tree, out newRight);
-                newLeft = new CartesianTree<T>(LeftSubTree, tree, X, Y, Data);
-                //newLeft.LeftSubTree = this.LeftSubTree;
-                //newLeft.RightSubTree = tree;
-                //newLeft.X = this.X;
-                //newLeft.Y = this.Y;
-            }
-            else
-            {
-                if (this.LeftSubTree == null)
-                    newLeft = null;
-                else
-                    this.LeftSubTree.Split(key, out newLeft, out tree);
-                newRight = new CartesianTree<T>(tree, RightSubTree, X, Y, Data);
-                //newRight.RightSubTree = this.RightSubTree;
-                //newRight.LeftSubTree = tree;
-                //newRight.X = this.X;
-                //newRight.Y = this.Y;
-
-            }
-        }
-        /// <summary>
-        /// Удалит элемент с заданным ключом
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public CartesianTree<T> Delete(int x)
-        {
-            CartesianTree<T> left = new CartesianTree<T>();
-            CartesianTree<T> right = new CartesianTree<T>();
-            CartesianTree<T> middle = new CartesianTree<T>();   // то дерево, которое будет удалено
-
-            Split(x - 1, out left, out right);
-            right.Split(x, out middle, out right);
-            return Merge(left, right);
-        }
-        public int FindMaxX()
-        {
-            if (RightSubTree == null)
-                return this.X;
-            CartesianTree<T> current = this.RightSubTree;
-            while (current.RightSubTree != null)
-                current = current.RightSubTree;
-            return current.X;
-        }
-        /// <summary>
-        /// Восстанавливает деревья из файла
-        /// </summary>
-        /// <param name="tree1"></param>
-        /// <param name="tree2"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public static int RestoreFromFile(CartesianTree<T> tree1, CartesianTree<T> tree2, string fileName)
-        {
-            StreamReader reader = new StreamReader(fileName);
-            string first;
-            int numberOfTrees = 0;          // 0 - если не получилось деревьев, 1 - если получилось одно деревео, 2 - если получилось 2 дерева
-            while ((first = reader.ReadLine()) != null)
-            {
-                if (first[0] == '$' && first[first.Length - 1] == '$')
-                {
-                    string[] pairs = first.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);  // разбил на пары х,у
-                    for (int i = 1; i < pairs.Length - 1; i++)  // нужно исключить элементы [0] и [lenght - 1], т.к. в них заведомо некорректные данные
-                    {
-                        string[] XY = pairs[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        int x, y;
-                        if (!Int32.TryParse(XY[0], out x))
-                            throw new InvalidDataException("Неверный формат строки дерева");
-                        if (!Int32.TryParse(XY[1], out y))
-                            throw new InvalidDataException("Неверный формат строки дерева");
-                        if (tree1 == null)
-                            tree1 = new CartesianTree<T>(x, y, default(T));
-                        tree1.Add(x, y);
-                    }
-                    numberOfTrees++;
-                }
-            }
-            reader.Close();
-            return numberOfTrees;
-        }
-        public void Clone(out CartesianTree<T> tree)
-        {
-            if (this == null)
-            {
-                tree = null;
+                Root = new Node<T>(x, y, data);
                 return;
             }
-
+            Root = Root.Add(x, y, data);
+            return;
         }
 
+        public void DeleteElement(int x)
+        {
+            if (Root == null)
+                return;
+            else
+                Root = Root.Delete(x);
+        }
+
+        public static int RestoreFromFile(string fileName, out CartesianTree<T> tree1, out CartesianTree<T> tree2)
+        {
+            tree1 = new CartesianTree<T>();
+            tree2 = new CartesianTree<T>();
+            try
+            {
+                return Node<T>.RestoreFromFile(tree1.Root, tree2.Root, fileName);
+            }
+            catch(InvalidDataException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadKey();
+                return -1;
+            }
+        }
+        private int GetHeight(Node<T> currentNode)
+        {
+            int height = 0;
+            int leftHeight = 0;
+            int rightHeight = 0;
+            if (currentNode != null)
+            {
+                height = 1;
+                if (currentNode.LeftSubTree != null)
+                {
+                    leftHeight = GetHeight(currentNode.LeftSubTree);
+                }
+                if (currentNode.RightSubTree != null)
+                {
+                    rightHeight = GetHeight(currentNode.RightSubTree);
+                }
+            }
+            if (leftHeight > rightHeight)
+                return leftHeight + height;
+            else
+                return rightHeight + height;
+        }
+
+        public bool IsEmpty()
+        {
+            if (Root == null)
+                return true;
+            return false;
+        }
     }
 }

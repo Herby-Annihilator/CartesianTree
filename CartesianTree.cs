@@ -104,6 +104,7 @@ namespace AlgLab8
 
         public void DeleteFromSegment(int x1, int x2)
         {
+            for (int i = x1; i <= x2; i++ )
             if (this.Root.X >= x1 && this.Root.X <= x2)
                 Root = Root.Delete(Root.X);
         }
@@ -159,14 +160,14 @@ namespace AlgLab8
                 Console.WriteLine("Приоритет = " + Root.Y);
                 Console.Write("Потомок слева = ");
                 if (Root.LeftSubTree != null)
-                    Console.WriteLine("ключ Х = " + Root.LeftSubTree.X + "приоритет Y = " + Root.LeftSubTree.Y);
+                    Console.WriteLine("ключ Х = " + Root.LeftSubTree.X + " приоритет Y = " + Root.LeftSubTree.Y);
                 else
-                    Console.WriteLine("не существует");
+                    Console.WriteLine(" не существует");
                 Console.Write("Потомок справа = ");
                 if (Root.RightSubTree != null)
-                    Console.WriteLine("ключ Х = " + Root.RightSubTree.X + "приоритет Y = " + Root.RightSubTree.Y + "\n\n");
+                    Console.WriteLine("ключ Х = " + Root.RightSubTree.X + " приоритет Y = " + Root.RightSubTree.Y + "\n\n");
                 else
-                    Console.WriteLine("не существует\n\n");
+                    Console.WriteLine(" не существует\n\n");
             }
         }
         public bool ShowTreeLinks()
@@ -177,6 +178,8 @@ namespace AlgLab8
             Node<T> currentNode = Root;
             Console.WriteLine("\n");
             GetRootInfo();
+            Console.WriteLine("\nВысота = " + Height);
+            Console.WriteLine("MAX = " + FindMax());
             Console.WriteLine("\n");
             Console.WriteLine("================Таблица ссылок в данном экземпляре Декартова дерева==================\n");
             Console.WriteLine("| Ключ + (приоритет)|  Левый потомок|  Правый потомок|\n");

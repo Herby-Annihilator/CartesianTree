@@ -50,7 +50,7 @@ namespace AlgLab8
                             Subroutines.SaveTreeInFile(tree1, "input.dat");
 
                             writer = new StreamWriter("input.dat", true);
-                            writer.WriteLine(writer.NewLine  + "\n//==========Дерево 2============//\n");
+                            writer.WriteLine(writer.NewLine  + "\r\n//==========Дерево 2============//\n");
                             writer.Close();
 
                             Subroutines.SaveTreeInFile(tree2, "input.dat");
@@ -112,7 +112,7 @@ namespace AlgLab8
                             {
                                 StreamWriter writer = new StreamWriter("output.dat");
                                 writer.WriteLine("##############################################");
-                                writer.WriteLine("               Было     (Дерево 2)");
+                                writer.WriteLine("               Было     (Дерево 1)");
                                 writer.WriteLine("##############################################");
                                 writer.Close();
 
@@ -121,7 +121,7 @@ namespace AlgLab8
 
                                 writer = new StreamWriter("output.dat", true);
                                 writer.WriteLine("\n\n##############################################");
-                                writer.WriteLine("               Стало    (Дерево 2)");
+                                writer.WriteLine("               Стало    (Дерево 1)");
                                 writer.WriteLine("##############################################");
                                 writer.Close();
                                 Subroutines.AddLinksTableToFile(tree1, "output.dat");

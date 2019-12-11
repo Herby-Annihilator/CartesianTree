@@ -102,7 +102,7 @@ namespace AlgLab8
                 return leftTree;
             if (leftTree.Y > rightTree.Y)
             {
-                rightTree.LeftSubTree = Merge(rightTree.LeftSubTree, leftTree);
+                rightTree.LeftSubTree = Merge(leftTree, rightTree.LeftSubTree);   // в левом дереве ключи строго меньше ключей в правом дереве
                 return rightTree;
             }
             else
@@ -127,10 +127,6 @@ namespace AlgLab8
                 else
                     this.RightSubTree.Split(key, out tree, out newRight);
                 newLeft = new Node<T>(LeftSubTree, tree, X, Y, Data);
-                //newLeft.LeftSubTree = this.LeftSubTree;
-                //newLeft.RightSubTree = tree;
-                //newLeft.X = this.X;
-                //newLeft.Y = this.Y;
             }
             else
             {
@@ -139,11 +135,6 @@ namespace AlgLab8
                 else
                     this.LeftSubTree.Split(key, out newLeft, out tree);
                 newRight = new Node<T>(tree, RightSubTree, X, Y, Data);
-                //newRight.RightSubTree = this.RightSubTree;
-                //newRight.LeftSubTree = tree;
-                //newRight.X = this.X;
-                //newRight.Y = this.Y;
-
             }
         }
         /// <summary>
@@ -203,7 +194,8 @@ namespace AlgLab8
                                 throw new InvalidDataException("Неверный формат строки дерева");
                             if (tree1 == null)
                                 tree1 = new Node<T>(x, y, default(T));
-                            tree1 = tree1.Add(x, y);
+                            else
+                                tree1 = tree1.Add(x, y);
                         }
                         numberOfTrees++;
                     }
@@ -219,7 +211,8 @@ namespace AlgLab8
                                 throw new InvalidDataException("Неверный формат строки дерева");
                             if (tree2 == null)
                                 tree2 = new Node<T>(x, y, default(T));
-                            tree2 = tree2.Add(x, y);
+                            else
+                                tree2 = tree2.Add(x, y);
                         }
                         numberOfTrees++;
                         break;

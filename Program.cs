@@ -30,16 +30,22 @@ namespace AlgLab8
                             int elemNum = 0;
                             do
                             {
-                                Console.Write("Сколько элементов будет в первом дереве ");
-                            } while (!Int32.TryParse(Console.ReadLine(), out elemNum));
+                                do
+                                {
+                                    Console.Write("Сколько элементов будет в первом дереве (не более 50 и не менее 1) ");
+                                } while (!Int32.TryParse(Console.ReadLine(), out elemNum));
+                            } while (elemNum > 50 || elemNum < 1);
                             Random random = new Random();
                             for (int i = 0; i < elemNum; i++)
                                 tree1.Add(random.Next(0, 100), random.Next(0, 10000));
 
                             do
                             {
-                                Console.Write("Сколько элементов будет во втором дереве ");
-                            } while (!Int32.TryParse(Console.ReadLine(), out elemNum));
+                                do
+                                {
+                                    Console.Write("Сколько элементов будет во втором дереве (не более 50 и не менее 1) ");
+                                } while (!Int32.TryParse(Console.ReadLine(), out elemNum));
+                            } while (elemNum > 50 || elemNum < 1);
                             for (int i = 0; i < elemNum; i++)
                                 tree2.Add(random.Next(0, 100), random.Next(0, 10000));
 
@@ -67,7 +73,16 @@ namespace AlgLab8
                                 tree1 = new CartesianTree<int>();
                             if (!tree2.IsEmpty())
                                 tree2 = new CartesianTree<int>();
-                            CartesianTree<int>.RestoreFromFile("input.dat", out tree1, out tree2);
+                            try
+                            {
+                                CartesianTree<int>.RestoreFromFile("input.dat", out tree1, out tree2);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Что-то мне совсем плохо");
+                                Console.ReadKey();
+                                Environment.Exit(-2);
+                            }
                             Console.WriteLine("\nНажмите что-нибудь");
                             Console.ReadKey();
                             break;

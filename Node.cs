@@ -171,6 +171,8 @@ namespace AlgLab8
         public static int RestoreFromFile(out Node<T> tree1, out Node<T> tree2, string fileName)
         {
             StreamReader reader = new StreamReader(fileName);
+            if (reader == null)
+                throw new FileNotFoundException("Файл не найден");
             tree1 = null;
             tree2 = null;
             string first;
@@ -221,6 +223,59 @@ namespace AlgLab8
             }
             reader.Close();
             return numberOfTrees;
+        }
+        /// <summary>
+        /// Вернет узел, ключ которого больше, либо равен заданному
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public Node<T> FindMoreThen(int x)
+        {
+            Node<T> current = this;
+            Node<T> toReturn = null;
+            while (true)
+            {
+                if (current != null)
+                {
+                    if (current.X <= x)     // значит, такой элемент существует
+                    {
+                        toReturn = current;
+                        break;
+                    }
+                    else
+                        current = current.RightSubTree;
+                }
+                else
+                    break;
+            }
+
+            return toReturn;
+        }
+        /// <summary>
+        /// Вернет узел, ключ которого меньше, либо равен заданному
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public Node<T> FindSmallerThen(int x)
+        {
+            Node<T> current = this;
+            Node<T> toReturn = null;
+            while (true)
+            {
+                if (current != null)
+                {
+                    if (current.X >= x)        // значит, такой элемент существует
+                    {
+                        toReturn = current;
+                        break;
+                    }
+                    else
+                        current = current.LeftSubTree;
+                }
+                else
+                    break;
+            }
+            return toReturn;
         }
     }
 }

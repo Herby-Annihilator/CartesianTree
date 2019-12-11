@@ -71,6 +71,12 @@ namespace AlgLab8
                 Console.ReadKey();
                 return -1;
             }
+            catch(FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadKey();
+                return -1;
+            }
         }
         private int GetHeight(Node<T> currentNode)
         {
@@ -104,9 +110,23 @@ namespace AlgLab8
 
         public void DeleteFromSegment(int x1, int x2)
         {
-            for (int i = x1; i <= x2; i++ )
-            if (this.Root.X >= x1 && this.Root.X <= x2)
+            if (Root == null)
+                return;
+            while (this.Root.X >= x1 && this.Root.X <= x2)
                 Root = Root.Delete(Root.X);
+            if (Root.X < x1)
+            {
+                if (Root.RightSubTree != null)
+                {
+                    Node<T> toDelete;
+                    while ((toDelete = Root.RightSubTree.FindMoreThen(x1)) != null && (toDelete = Root.RightSubTree.FindSmallerThen(x2)) != null)
+                        Root.RightSubTree = Root.RightSubTree.Delete(toDelete.X);
+                }
+                if (true)
+                {
+
+                }
+            }
         }
 
         public int FindMax()

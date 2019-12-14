@@ -107,6 +107,11 @@ namespace AlgLab8
                             } while (x > y);
                             if (tree1.FindMax() < tree2.FindMax())
                             {
+                                Console.WriteLine("\n\nУдаление из :");
+                                Console.WriteLine("\n\n=======Дерево 2======\n\n");
+                                tree2.GetRootInfo();
+                                Console.WriteLine("Высота = " + tree2.Height);
+                                Console.WriteLine("MAX = " + tree2.FindMax());
                                 StreamWriter writer = new StreamWriter("output.dat");
                                 writer.WriteLine("##############################################");
                                 writer.WriteLine("               Было     (Дерево 2)");
@@ -125,6 +130,11 @@ namespace AlgLab8
                             }
                             else
                             {
+                                Console.WriteLine("\n\nУдаление из :");
+                                Console.WriteLine("\n\n=======Дерево 1======\n\n");
+                                tree1.GetRootInfo();
+                                Console.WriteLine("Высота = " + tree1.Height);
+                                Console.WriteLine("MAX = " + tree1.FindMax());
                                 StreamWriter writer = new StreamWriter("output.dat");
                                 writer.WriteLine("##############################################");
                                 writer.WriteLine("               Было     (Дерево 1)");

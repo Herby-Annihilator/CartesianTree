@@ -60,6 +60,11 @@ namespace AlgLab8
             writer.Write("$\n");
             writer.Close();
         }
+        /// <summary>
+        /// Добавит таблицу ссылок для данного декаротова дерева в укзанный файл
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="fileName"></param>
         public static void AddLinksTableToFile(CartesianTree<int> tree, string fileName)
         {
             if (tree.Root == null)
@@ -78,19 +83,19 @@ namespace AlgLab8
             }
             else
             {
-                Console.WriteLine("Поле data = " + tree.Root.Data);
-                Console.WriteLine("Ключ Х = " + tree.Root.X);
-                Console.WriteLine("Приоритет = " + tree.Root.Y);
-                Console.Write("Потомок слева = ");
+                writer.WriteLine("Поле data = " + tree.Root.Data);
+                writer.WriteLine("Ключ Х = " + tree.Root.X);
+                writer.WriteLine("Приоритет = " + tree.Root.Y);
+                writer.Write("Потомок слева = ");
                 if (tree.Root.LeftSubTree != null)
-                    Console.WriteLine("ключ Х = " + tree.Root.LeftSubTree.X + "приоритет Y = " + tree.Root.LeftSubTree.Y);
+                    writer.WriteLine("ключ Х = " + tree.Root.LeftSubTree.X + "приоритет Y = " + tree.Root.LeftSubTree.Y);
                 else
-                    Console.WriteLine("не существует");
-                Console.Write("Потомок справа = ");
+                    writer.WriteLine("не существует");
+                writer.Write("Потомок справа = ");
                 if (tree.Root.RightSubTree != null)
-                    Console.WriteLine("ключ Х = " + tree.Root.RightSubTree.X + "приоритет Y = " + tree.Root.RightSubTree.Y + "\n\n");
+                    writer.WriteLine("ключ Х = " + tree.Root.RightSubTree.X + "приоритет Y = " + tree.Root.RightSubTree.Y + "\n\n");
                 else
-                    Console.WriteLine("не существует\n\n");
+                    writer.WriteLine("не существует\n\n");
             }
             writer.WriteLine("\n");
             writer.WriteLine("================Таблица ссылок в данном экземпляре Декартова дерева==================\n");

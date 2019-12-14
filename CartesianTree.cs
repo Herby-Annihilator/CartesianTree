@@ -31,7 +31,12 @@ namespace AlgLab8
         {
             Root = root;
         }
-
+        /// <summary>
+        /// Добавит элемент в декартово дерево
+        /// </summary>
+        /// <param name="x">ключ</param>
+        /// <param name="y">приоритет</param>
+        /// <param name="data"></param>
         public void Add(int x, int y, T data = default(T))
         {
             if (Root == null)
@@ -42,7 +47,10 @@ namespace AlgLab8
             Root = Root.Add(x, y, data);
             return;
         }
-
+        /// <summary>
+        /// Удалит элемент из декартова дерева
+        /// </summary>
+        /// <param name="x">ключ элемента</param>
         public void DeleteElement(int x)
         {
             if (Root == null)
@@ -50,7 +58,13 @@ namespace AlgLab8
             else
                 Root = Root.Delete(x);
         }
-
+        /// <summary>
+        /// Восстанавливает из файла два дерева
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="tree1"></param>
+        /// <param name="tree2"></param>
+        /// <returns></returns>
         public static int RestoreFromFile(string fileName, out CartesianTree<T> tree1, out CartesianTree<T> tree2)
         {
             tree1 = new CartesianTree<T>();
@@ -78,6 +92,11 @@ namespace AlgLab8
                 return -1;
             }
         }
+        /// <summary>
+        /// Получает выстоту дерева
+        /// </summary>
+        /// <param name="currentNode"></param>
+        /// <returns></returns>
         private int GetHeight(Node<T> currentNode)
         {
             int height = 0;
@@ -100,20 +119,34 @@ namespace AlgLab8
             else
                 return rightHeight + height;
         }
-
+        /// <summary>
+        /// Проверит дерево на пустоту (true - если пусто)
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty()
         {
             if (Root == null)
                 return true;
             return false;
         }
-
+        /// <summary>
+        /// Удалит элементы декартова дерева из заданного промежутка
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
         public void DeleteFromSegment(int x1, int x2)
         {
             if (Root == null)
                 return;
             Root = DeleteFromSegment(Root, ref x1, ref x2);
         }
+        /// <summary>
+        /// Удалит элементы декартова дерева из заданного промежутка (для использования внутри публичного метода)
+        /// </summary>
+        /// <param name="currentNode"></param>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
+        /// <returns></returns>
         private Node<T> DeleteFromSegment(Node<T> currentNode, ref int x1, ref int x2)
         {
             if (currentNode == null)
@@ -133,7 +166,10 @@ namespace AlgLab8
             }
             return currentNode;
         }
-
+        /// <summary>
+        /// Найдет максимальный элемент в дереве
+        /// </summary>
+        /// <returns></returns>
         public int FindMax()
         {
             return this.Root.FindMaxX();
@@ -170,7 +206,9 @@ namespace AlgLab8
                 }
             }
         }
-
+        /// <summary>
+        /// Получает информацию о корне
+        /// </summary>
         public void GetRootInfo()
         {
             if (Root == null)
@@ -195,6 +233,10 @@ namespace AlgLab8
                     Console.WriteLine(" не существует\n\n");
             }
         }
+        /// <summary>
+        /// Покажет таблицу ссылок в данном экземпляре дерева
+        /// </summary>
+        /// <returns></returns>
         public bool ShowTreeLinks()
         {
             if (this.Root == null)

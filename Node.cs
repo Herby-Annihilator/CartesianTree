@@ -152,6 +152,10 @@ namespace AlgLab8
             right.Split(x, out middle, out right);
             return Merge(left, right);
         }
+        /// <summary>
+        /// Найдет максимальный элемент в дереве
+        /// </summary>
+        /// <returns></returns>
         public int FindMaxX()
         {
             if (RightSubTree == null)

@@ -112,21 +112,26 @@ namespace AlgLab8
         {
             if (Root == null)
                 return;
-            while (this.Root.X >= x1 && this.Root.X <= x2)
-                Root = Root.Delete(Root.X);
-            if (Root.X < x1)
+            Root = DeleteFromSegment(Root, ref x1, ref x2);
+        }
+        private Node<T> DeleteFromSegment(Node<T> currentNode, ref int x1, ref int x2)
+        {
+            if (currentNode == null)
+                return null;
+            while (currentNode.X >= x1 && currentNode.X <= x2)
             {
-                if (Root.RightSubTree != null)
-                {
-                    Node<T> toDelete;
-                    while ((toDelete = Root.RightSubTree.FindMoreThen(x1)) != null && (toDelete = Root.RightSubTree.FindSmallerThen(x2)) != null)
-                        Root.RightSubTree = Root.RightSubTree.Delete(toDelete.X);
-                }
-                if (true)
-                {
-
-                }
+                currentNode = currentNode.Delete(currentNode.X);
+                if (currentNode == null)
+                    break;
             }
+            if (currentNode != null)
+            {
+                if (currentNode.X < x1)
+                    currentNode.RightSubTree = DeleteFromSegment(currentNode.RightSubTree, ref x1, ref x2);
+                else if (currentNode.X > x2)
+                    currentNode.LeftSubTree = DeleteFromSegment(currentNode.LeftSubTree, ref x1, ref x2);
+            }
+            return currentNode;
         }
 
         public int FindMax()

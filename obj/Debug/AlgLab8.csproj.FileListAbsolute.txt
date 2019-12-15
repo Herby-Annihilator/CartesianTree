@@ -4,3 +4,9 @@ D:\Проекты  в студии\AlgLab8\bin\Debug\AlgLab8.pdb
 D:\Проекты  в студии\AlgLab8\obj\Debug\AlgLab8.csprojAssemblyReference.cache
 D:\Проекты  в студии\AlgLab8\obj\Debug\AlgLab8.exe
 D:\Проекты  в студии\AlgLab8\obj\Debug\AlgLab8.pdb
+C:\VS_Projects\AlgLab8\bin\Debug\AlgLab8.exe.config
+C:\VS_Projects\AlgLab8\bin\Debug\AlgLab8.exe
+C:\VS_Projects\AlgLab8\bin\Debug\AlgLab8.pdb
+C:\VS_Projects\AlgLab8\obj\Debug\AlgLab8.csprojAssemblyReference.cache
+C:\VS_Projects\AlgLab8\obj\Debug\AlgLab8.exe
+C:\VS_Projects\AlgLab8\obj\Debug\AlgLab8.pdb

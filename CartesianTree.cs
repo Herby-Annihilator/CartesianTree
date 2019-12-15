@@ -172,6 +172,8 @@ namespace AlgLab8
         /// <returns></returns>
         public int FindMax()
         {
+            if (Root == null)
+                throw new InvalidOperationException("Дерева не существует");
             return this.Root.FindMaxX();
         }
         /// <summary>
@@ -200,7 +202,7 @@ namespace AlgLab8
                     else
                     {
                         // Visit
-                        Console.Write("X = " + currentNode.X + " Y = " + currentNode.Y + " ");
+                        Console.Write("X = " + peekNode.X + " Y = " + peekNode.Y + "\n");
                         lastVisitedNode = stack.Pop();
                     }
                 }

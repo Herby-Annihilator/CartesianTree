@@ -92,6 +92,12 @@ namespace AlgLab8
                     //
                     case 'd':
                         {
+                            if (tree1.IsEmpty() || tree2.IsEmpty())
+                            {
+                                Console.WriteLine("Одно или два дерева являются пустыми. Нажмите что-нубудь");
+                                Console.ReadKey();
+                                break;
+                            }
                             int x, y;
                             do
                             {
@@ -170,19 +176,35 @@ namespace AlgLab8
                             } while (whatTree < 1 || whatTree > 2);
                             if (whatTree == 1)
                             {
+                                if (tree1.IsEmpty())
+                                {
+                                    Console.WriteLine("Дерево пусто. Нажмите что-нибудь");
+                                    Console.ReadKey();
+                                    break;
+                                }
                                 Console.WriteLine("\n\n==========Дерево 1============");
                                 Console.WriteLine("\nКорень\n");
                                 tree1.GetRootInfo();
                                 Console.WriteLine("Высота = " + tree1.Height);
                                 Console.WriteLine("MAX = " + tree1.FindMax());
+
+                                tree1.ShowTree();
                             }
                             else
                             {
+                                if (tree2.IsEmpty())
+                                {
+                                    Console.WriteLine("Дерево пусто. Нажмите что-нибудь");
+                                    Console.ReadKey();
+                                    break;
+                                }
                                 Console.WriteLine("\n\n==========Дерево 2============");
                                 Console.WriteLine("\nКорень\n");
                                 tree2.GetRootInfo();
                                 Console.WriteLine("Высота = " + tree2.Height);
                                 Console.WriteLine("MAX = " + tree2.FindMax());
+
+                                tree2.ShowTree();
                             }
                             Console.WriteLine("\nНажмите что-нибудь");
                             Console.ReadKey();
@@ -240,11 +262,23 @@ namespace AlgLab8
                             } while (whatTree < 1 || whatTree > 2);
                             if (whatTree == 1)
                             {
+                                if (tree1.IsEmpty())
+                                {
+                                    Console.WriteLine("Дерево пусто. Нажмите что-нибудь");
+                                    Console.ReadKey();
+                                    break;
+                                }
                                 Console.WriteLine("\n\n==========Дерево 1============");
                                 Console.WriteLine("\nВысота = " + tree1.Height + "\n");
                             }
                             else
                             {
+                                if (tree2.IsEmpty())
+                                {
+                                    Console.WriteLine("Дерево пусто. Нажмите что-нибудь");
+                                    Console.ReadKey();
+                                    break;
+                                }
                                 Console.WriteLine("\n\n==========Дерево 2============");
                                 Console.WriteLine("\nВысота = " + tree2.Height + "\n");
                             }
@@ -267,12 +301,24 @@ namespace AlgLab8
                             } while (whatTree < 1 || whatTree > 2);
                             if (whatTree == 1)
                             {
+                                if (tree1.IsEmpty())
+                                {
+                                    Console.WriteLine("Дерево пусто. Нажмите что-нибудь");
+                                    Console.ReadKey();
+                                    break;
+                                }
                                 Console.WriteLine("\n\n==========Дерево 1============");
                                 Console.WriteLine("\nКорень\n");
                                 tree1.GetRootInfo();
                             }
                             else
                             {
+                                if (tree2.IsEmpty())
+                                {
+                                    Console.WriteLine("Дерево пусто. Нажмите что-нибудь");
+                                    Console.ReadKey();
+                                    break;
+                                }
                                 Console.WriteLine("\n\n==========Дерево 2============");
                                 Console.WriteLine("\nКорень\n");
                                 tree2.GetRootInfo();
